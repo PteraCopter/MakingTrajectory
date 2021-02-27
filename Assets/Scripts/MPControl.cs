@@ -97,8 +97,8 @@ public class MPControl : MonoBehaviour{
         BodyVelocity_z[0]=0;
         BodyAcc_x[0]=0;
         BodyAcc_z[0]=0;
-        DiffBodyAcc_x[0]=0.01f;
-        DiffBodyAcc_z[0]=0.01f;
+        DiffBodyAcc_x[0]=0;
+        DiffBodyAcc_z[0]=0;
         PreviousBodyPosition_x=BodyPosition_x[0];  
         PreviousBodyPosition_z=BodyPosition_z[0]; 
         InitialTime=Time.time;
@@ -186,7 +186,7 @@ public class MPControl : MonoBehaviour{
                 float ObstacleCost_x=0,ObstacleCost_z=0;
                 for(int j=0;j<Obstacle.Length+ObstacleXLine.Length+ObstacleZLine.Length;j++){
                     ObstacleDistance[j]=new Vector2(ObstaclePos_x[j,i]-BodyPosition_x[i],ObstaclePos_z[j,i]-BodyPosition_z[i]).magnitude;
-                    if(ObstacleDistance[j]<0.3f)Debug.Log(i+":"+j+":"+ObstacleDistance[j]);
+                    if(ObstacleDistance[j]<ObstacleRadius+ObstacleEffectScope&&i<5)Debug.Log(i+":"+j+":"+ObstacleDistance[j]);
                     if(ObstacleDistance[j]>ObstacleRadius+ObstacleEffectScope){
                         ObstacleCost_x+=0;
                         ObstacleCost_z+=0;
@@ -198,8 +198,8 @@ public class MPControl : MonoBehaviour{
                                             *(ObstacleDistance[j]-ObstacleRadius-ObstacleEffectScope)
                                             /Mathf.Sqrt(Mathf.Pow(ObstacleEffectScope,2)-Mathf.Pow(ObstacleDistance[j]-ObstacleRadius-ObstacleEffectScope,2));
                     }else {
-                        ObstacleCost_x+=ObstacleCostConstant/ObstacleEffectScope*(ObstaclePos_x[j,i]-BodyPosition_x[i])/Mathf.Sqrt(ObstacleRadius*ObstacleRadius-ObstacleDistance[j]*ObstacleDistance[j]);
-                        ObstacleCost_z+=ObstacleCostConstant/ObstacleEffectScope*(ObstaclePos_z[j,i]-BodyPosition_z[i])/Mathf.Sqrt(ObstacleRadius*ObstacleRadius-ObstacleDistance[j]*ObstacleDistance[j]);
+                        ObstacleCost_x+=10*ObstacleCostConstant/ObstacleRadius*(ObstaclePos_x[j,i]-BodyPosition_x[i])/Mathf.Sqrt(ObstacleRadius*ObstacleRadius-ObstacleDistance[j]*ObstacleDistance[j]);
+                        ObstacleCost_z+=10*ObstacleCostConstant/ObstacleRadius*(ObstaclePos_z[j,i]-BodyPosition_z[i])/Mathf.Sqrt(ObstacleRadius*ObstacleRadius-ObstacleDistance[j]*ObstacleDistance[j]);
                     }
                 }
                 float AdXContent=XConstant_Stage*(BodyPosition_x[i]-PositionReference_x)

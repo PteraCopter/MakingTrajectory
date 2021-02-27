@@ -129,7 +129,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh15300
+  m_Name: pb_Mesh15302
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -457,7 +457,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh15268
+  m_Name: pb_Mesh15270
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -4802,7 +4802,7 @@ GameObject:
   - component: {fileID: 417841722}
   - component: {fileID: 417841721}
   m_Layer: 0
-  m_Name: Cylinder (3)
+  m_Name: CyObstacle3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6057,7 +6057,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh15288
+  m_Name: pb_Mesh15290
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -6221,7 +6221,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh15230
+  m_Name: pb_Mesh15232
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -16481,7 +16481,7 @@ Transform:
   - {fileID: 827872493}
   - {fileID: 1106170990}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &644300097
 Mesh:
@@ -16489,7 +16489,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh15254
+  m_Name: pb_Mesh15256
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -16738,7 +16738,7 @@ Transform:
   m_Children:
   - {fileID: 991764000}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 90, y: -90, z: 0}
 --- !u!43 &732999772
 Mesh:
@@ -18678,7 +18678,7 @@ Transform:
   m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &893096962
 Mesh:
@@ -19233,13 +19233,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Father: {fileID: 1460989416}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &963886362
 GameObject:
   m_ObjectHideFlags: 0
@@ -19254,7 +19254,7 @@ GameObject:
   - component: {fileID: 963886365}
   - component: {fileID: 963886364}
   m_Layer: 0
-  m_Name: Cube (4)
+  m_Name: CuObstacle9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19567,7 +19567,7 @@ GameObject:
   - component: {fileID: 986809071}
   - component: {fileID: 986809070}
   m_Layer: 0
-  m_Name: Cylinder
+  m_Name: CyObstacle0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21235,7 +21235,7 @@ GameObject:
   - component: {fileID: 1104447680}
   - component: {fileID: 1104447679}
   m_Layer: 0
-  m_Name: Cylinder (2)
+  m_Name: CyObstacle2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23774,11 +23774,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1108987020}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.45, y: 0, z: 3.64}
+  m_LocalPosition: {x: 2.14, y: 0, z: 3.6}
   m_LocalScale: {x: 0.2, y: 0.1, z: 0.2}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &1108987022
 SphereCollider:
@@ -23856,7 +23856,7 @@ GameObject:
   - component: {fileID: 1257126090}
   - component: {fileID: 1257126089}
   m_Layer: 0
-  m_Name: Cube (9)
+  m_Name: CuObstacle7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25596,7 +25596,7 @@ GameObject:
   - component: {fileID: 1365306782}
   - component: {fileID: 1365306781}
   m_Layer: 0
-  m_Name: Cylinder (1)
+  m_Name: CyObstacle1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29570,15 +29570,16 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1460989411}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.69, y: 0.521, z: 1.45}
+  m_LocalPosition: {x: 0.2, y: 0.521, z: 2.81}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1515610510}
   - {fileID: 357808228}
   - {fileID: 1431028837}
   - {fileID: 1631942462}
+  - {fileID: 963194228}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &1460989417
 Rigidbody:
@@ -29602,7 +29603,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh15312
+  m_Name: pb_Mesh15314
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -33961,7 +33962,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh15242
+  m_Name: pb_Mesh15244
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -34234,7 +34235,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1727616924
 MonoBehaviour:
@@ -34264,23 +34265,23 @@ MonoBehaviour:
   ObstacleZLine:
   - {fileID: 1888822014}
   - {fileID: 963886362}
-  GMRES_RepeatTime: 5
-  PredictionTime: 50
-  StableConstant: 0.3
+  GMRES_RepeatTime: 10
+  PredictionTime: 120
+  StableConstant: 0.2
   XConstant: 2
   ZConstant: 2
-  dXCosntant: 0.5
-  dZConstant: 0.5
-  XConstant_Stage: 0.1
-  ZConstant_Stage: 0.1
-  dXConstant_Stage: 0.3
-  dZConstant_Stage: 0.3
+  dXCosntant: 0.1
+  dZConstant: 0.1
+  XConstant_Stage: 0.01
+  ZConstant_Stage: 0.01
+  dXConstant_Stage: 0.01
+  dZConstant_Stage: 0.01
   ddXConstant: 0.1
   ddZConstant: 0.1
-  ObstacleRadius: 0.3
-  ObstacleEffectScope: 0.5
-  ObstacleCostConstant: 3
-  FinalEvaluarionScope: 2
+  ObstacleRadius: 0.2
+  ObstacleEffectScope: 0.4
+  ObstacleCostConstant: 2
+  FinalEvaluarionScope: 3
   BodyPosition_x: []
   BodyPosition_z: []
   BodyVelocity_x: []
@@ -36538,7 +36539,7 @@ GameObject:
   - component: {fileID: 1888822017}
   - component: {fileID: 1888822016}
   m_Layer: 0
-  m_Name: Cube (2)
+  m_Name: CuObstacle8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37015,7 +37016,7 @@ GameObject:
   - component: {fileID: 1970252440}
   - component: {fileID: 1970252439}
   m_Layer: 0
-  m_Name: Cube (3)
+  m_Name: CuObstacle5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -38194,7 +38195,7 @@ GameObject:
   - component: {fileID: 2080308104}
   - component: {fileID: 2080308103}
   m_Layer: 0
-  m_Name: Cube (5)
+  m_Name: CuObstacle6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -38507,7 +38508,7 @@ GameObject:
   - component: {fileID: 2113640836}
   - component: {fileID: 2113640835}
   m_Layer: 0
-  m_Name: Cylinder (4)
+  m_Name: CyObstacle4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
