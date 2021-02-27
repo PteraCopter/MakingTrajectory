@@ -15,19 +15,24 @@ using UnityEngine;
     v[t]:時刻tにおける目標物の速度
     u[t]:時刻tにおける入力
 
-    パラメータ記録
-    -2021/19/Jan(非ホロノミック的性質よりxは収束しないがyとthetaは上手いこと言った、入力も振動せず)
-    PositionRefference_x 0
-    PositionRefference_y 3
-    GMRES_RepeatTime 2
-    PredictionTime 10
-    SstaleConstant 100
-    YConstant 3
-    YCOnstant_Stage 1
-    ThetaConstant 3
-    ThetaConstant_Stage 1
-    LForceConsant_Stage 0.5
-    RForceConsant_Stage 0.5
+    パラメータ記録 コード内のものは初期値であり、上手く動いた時のパラメータとは異なる
+    GMRES_RepeatTime 10     
+    PredictionTime 120     
+    SstaleConstant 0.2
+    XConstant 2
+    ZConstant 2
+    DXConstant 0.1
+    DZConstant 0.1
+    XConstant_Stage 0.01
+    ZConstant_Stage 0.01
+    DXConstant_Stage 0.01
+    DZConstant_Stage 0.01
+    DdXConstant 0.1
+    DdZConstant 0.1
+    ObstacleRadius 0.2
+    ObstacleEffectScope 0.4
+    ObstacleCostCosntant 2
+    FinalEvaluationScope 3
     その他 0
 */
 
