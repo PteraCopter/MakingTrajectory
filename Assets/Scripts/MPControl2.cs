@@ -36,13 +36,12 @@ using UnityEngine;
     その他 0
 */
 
-public class MPControl : MonoBehaviour{
+public class MPControl2 : MonoBehaviour{
     public bool MPC_mode=true;
-    public Natural natural;
-    public MakeTargetPoint makeTargetPoint;
-    public GameObject[] Obstacle;
-    public GameObject[] ObstacleXLine;
-    public GameObject[] ObstacleZLine;
+    public int RayTime;
+    public float RayLength=1;
+    public Natural natural2;
+    public MakeTargetPoint makeTargetPoint2;
     public int GMRES_RepeatTime=2;
     public int PredictionTime=10;
     public float StableConstant=100;
@@ -60,14 +59,15 @@ public class MPControl : MonoBehaviour{
     float PositionReference_x,PositionReference_z;
     float InitialTime;
     Transform BodyTransform;
-    float[,] ObstaclePos_x,ObstaclePos_z;//[Number of Obstacle,predictiontime]
+    float[] ObstaclePos_x,ObstaclePos_z;//[Number of Obstacle]
+    float[] ObstacleEachWei;
     public bool isCloseToTarget=false;
+    float dt;
     int NumOfLoop=0;
 
     // Start is called before the first frame update
     void Start(){
-        ObstaclePos_x=new float[Obstacle.Length+ObstacleXLine.Length+ObstacleZLine.Length,PredictionTime+1];
-        ObstaclePos_z=new float[Obstacle.Length+ObstacleXLine.Length+ObstacleZLine.Length,PredictionTime+1];
+        ObstacleEachWei=new float[RayTime+100];
         BodyPosition_x=new float[PredictionTime+1];
         BodyPosition_z=new float[PredictionTime+1];
         BodyVelocity_x=new float[PredictionTime+1];
@@ -80,7 +80,7 @@ public class MPControl : MonoBehaviour{
         AdjointVector_dx=new float[PredictionTime+1]; 
         AdjointVector_z=new float[PredictionTime+1]; 
         AdjointVector_dz=new float[PredictionTime+1]; 
-        BodyTransform=natural.BodyTransform;
+        BodyTransform=natural2.BodyTransform;
 
         for(int i = 0; i <PredictionTime+1 ; i++){
             DiffBodyAcc_x[i]=0.01f; 
@@ -114,15 +114,16 @@ public class MPControl : MonoBehaviour{
     // Update is called once per frame
     void FixedUpdate(){
         //try{
-        PositionReference_x=makeTargetPoint.TargetPoint.x;
-        PositionReference_z=makeTargetPoint.TargetPoint.y;
+        PositionReference_x=makeTargetPoint2.TargetPoint.x;
+        PositionReference_z=makeTargetPoint2.TargetPoint.y;
         // モデルへの入力はnaturalクラスでおこなっている
 
-        if(MPC_mode&&natural.ControlMode==1&&!isCloseToTarget){
+        if(MPC_mode&&natural2.ControlMode==2&&!isCloseToTarget){
+            GetObstacles(BodyTransform.position);
 
             //measure real delta time (not evaluation delta time)
             //制御ループ周期(dt)測定
-            float dt=Time.deltaTime; 
+            dt=Time.deltaTime; 
 
             //meature present Object's position and velocity and input them into ObjectPosition[0],ObjectVelocity[0]
             //目標物の位置と速度を計測し、x[τ=0],v[τ=0]に代入する
@@ -132,19 +133,8 @@ public class MPControl : MonoBehaviour{
             BodyVelocity_z[0]=(BodyPosition_z[0]-PreviousBodyPosition_z)/dt;
             PreviousBodyPosition_x=BodyPosition_x[0]; 
             PreviousBodyPosition_z=BodyPosition_z[0];
-            for(int i=0;i<ObstaclePos_x.Length;i++){
-                if(i<Obstacle.Length){
-                    ObstaclePos_x[i,0]=Obstacle[i].transform.position.x;
-                    ObstaclePos_z[i,0]=Obstacle[i].transform.position.z;
-                }else if(i<Obstacle.Length+ObstacleXLine.Length){
-                    ObstaclePos_x[i,0]=BodyPosition_x[0];
-                    ObstaclePos_z[i,0]=ObstacleXLine[i-Obstacle.Length].transform.position.z;
-                }else if(i<Obstacle.Length+ObstacleXLine.Length+ObstacleZLine.Length){
-                    ObstaclePos_x[i,0]=ObstacleZLine[i-Obstacle.Length-ObstacleXLine.Length].transform.position.x;
-                    ObstaclePos_z[i,0]=BodyPosition_x[0];
-                }
-                if(BodyPosition_x[0]>-2.5f+ObstacleRadius&&BodyPosition_x[0]<2-ObstacleRadius) ObstaclePos_z[6,0]=100;
-            }
+
+            
 
             //difine EvaluationTime in this loop
             //EvalutionTime will converge to FinalEvaluationScope/PredictionTime
@@ -159,19 +149,6 @@ public class MPControl : MonoBehaviour{
                 BodyPosition_z[i]=BodyPosition_z[i-1]+BodyVelocity_z[i-1]*EvalDT;//+force_y/Mass*EvalDT*EvalDT/2; 
                 BodyVelocity_x[i]=BodyVelocity_x[i-1]+BodyAcc_x[i-1]*EvalDT;
                 BodyVelocity_z[i]=BodyVelocity_z[i-1]+BodyAcc_z[i-1]*EvalDT;
-                for(int j=0;j<ObstaclePos_x.Length;j++){
-                    if(j<Obstacle.Length){
-                        ObstaclePos_x[j,i]=Obstacle[j].transform.position.x;
-                        ObstaclePos_z[j,i]=Obstacle[j].transform.position.z;
-                    }else if(j<Obstacle.Length+ObstacleXLine.Length){
-                        ObstaclePos_x[j,i]=BodyPosition_x[i];
-                        ObstaclePos_z[j,i]=ObstacleXLine[j-Obstacle.Length].transform.position.z;
-                    }else if(j<Obstacle.Length+ObstacleXLine.Length+ObstacleZLine.Length){
-                        ObstaclePos_x[j,i]=ObstacleZLine[j-Obstacle.Length-ObstacleXLine.Length].transform.position.x;
-                        ObstaclePos_z[j,i]=BodyPosition_x[i];
-                    }
-                }
-                if(BodyPosition_x[i]>-2.5f+ObstacleRadius&&BodyPosition_x[i]<2-ObstacleRadius) ObstaclePos_z[6,i]=100;
             }
 
 
@@ -189,22 +166,22 @@ public class MPControl : MonoBehaviour{
             for(int i=PredictionTime-1;i>0;i--){ 
                 float[] ObstacleDistance=new float[ObstaclePos_x.Length];
                 float ObstacleCost_x=0,ObstacleCost_z=0;
-                for(int j=0;j<Obstacle.Length+ObstacleXLine.Length+ObstacleZLine.Length;j++){
-                    ObstacleDistance[j]=new Vector2(ObstaclePos_x[j,i]-BodyPosition_x[i],ObstaclePos_z[j,i]-BodyPosition_z[i]).magnitude;
-                    if(ObstacleDistance[j]<ObstacleRadius+ObstacleEffectScope&&i<5)Debug.Log(i+":"+j+":"+ObstacleDistance[j]);
+                for(int j=0;j<ObstaclePos_x.Length;j++){
+                    ObstacleDistance[j]=new Vector2(ObstaclePos_x[j]-BodyPosition_x[i],ObstaclePos_z[j]-BodyPosition_z[i]).magnitude;
+                    if(ObstacleDistance[j]<ObstacleRadius&&i<2)Debug.Log(i+":"+j+":"+ObstacleDistance[j]);
                     if(ObstacleDistance[j]>ObstacleRadius+ObstacleEffectScope){
                         ObstacleCost_x+=0;
                         ObstacleCost_z+=0;
                     }else if(ObstacleDistance[j]>ObstacleRadius){
-                        ObstacleCost_x+=-ObstacleCostConstant/ObstacleEffectScope*(ObstaclePos_x[j,i]-BodyPosition_x[i])/ObstacleDistance[j]
+                        ObstacleCost_x+=-ObstacleCostConstant*ObstacleEachWei[j]/ObstacleEffectScope*(ObstaclePos_x[j]-BodyPosition_x[i])/ObstacleDistance[j]
                                             *(ObstacleDistance[j]-ObstacleRadius-ObstacleEffectScope)
                                             /Mathf.Sqrt(Mathf.Pow(ObstacleEffectScope,2)-Mathf.Pow(ObstacleDistance[j]-ObstacleRadius-ObstacleEffectScope,2));
-                        ObstacleCost_z+=-ObstacleCostConstant/ObstacleEffectScope*(ObstaclePos_z[j,i]-BodyPosition_z[i])/ObstacleDistance[j]
+                        ObstacleCost_z+=-ObstacleCostConstant*ObstacleEachWei[j]/ObstacleEffectScope*(ObstaclePos_z[j]-BodyPosition_z[i])/ObstacleDistance[j]
                                             *(ObstacleDistance[j]-ObstacleRadius-ObstacleEffectScope)
                                             /Mathf.Sqrt(Mathf.Pow(ObstacleEffectScope,2)-Mathf.Pow(ObstacleDistance[j]-ObstacleRadius-ObstacleEffectScope,2));
                     }else {
-                        ObstacleCost_x+=10*ObstacleCostConstant/ObstacleRadius*(ObstaclePos_x[j,i]-BodyPosition_x[i])/Mathf.Sqrt(ObstacleRadius*ObstacleRadius-ObstacleDistance[j]*ObstacleDistance[j]);
-                        ObstacleCost_z+=10*ObstacleCostConstant/ObstacleRadius*(ObstaclePos_z[j,i]-BodyPosition_z[i])/Mathf.Sqrt(ObstacleRadius*ObstacleRadius-ObstacleDistance[j]*ObstacleDistance[j]);
+                        ObstacleCost_x+=10*ObstacleCostConstant/ObstacleRadius*(ObstaclePos_x[j]-BodyPosition_x[i])/Mathf.Sqrt(ObstacleRadius*ObstacleRadius-ObstacleDistance[j]*ObstacleDistance[j]);
+                        ObstacleCost_z+=10*ObstacleCostConstant/ObstacleRadius*(ObstaclePos_z[j]-BodyPosition_z[i])/Mathf.Sqrt(ObstacleRadius*ObstacleRadius-ObstacleDistance[j]*ObstacleDistance[j]);
                     }
                 }
                 float AdXContent=XConstant_Stage*(BodyPosition_x[i]-PositionReference_x)
@@ -339,10 +316,39 @@ public class MPControl : MonoBehaviour{
                                 +Mathf.Pow(BodyVelocity_x[0],2)+Mathf.Pow(BodyVelocity_z[0],2);
 
             if(TargetDiff<0.01f) isCloseToTarget=true;
+        }//if(MPC_mode...)
+    }//Update
+
+    void GetObstacles(Vector3 BodyPos){
+        List<float> obstaclePos_x=new List<float>();
+        List<float> obstaclePos_z=new List<float>();
+        int ObstacleNum=0;
+        int SuccessiveTime=1;
+        for(int i=0;i<RayTime;i++){
+            float RayAngle=2*Mathf.PI*i/RayTime;
+            Ray ray=new Ray(BodyPos,new Vector3(Mathf.Cos(RayAngle),0,Mathf.Sin(RayAngle)));
+            RaycastHit hit;
+            if(Physics.Raycast(ray,out hit,RayLength)){
+                obstaclePos_x.Add(hit.point.x);
+                obstaclePos_z.Add(hit.point.z);
+                float obstacleDistance=0;
+                if(ObstacleNum!=0)obstacleDistance=new Vector2(obstaclePos_x[ObstacleNum]-obstaclePos_x[ObstacleNum-1],obstaclePos_z[ObstacleNum]-obstaclePos_z[ObstacleNum-1]).magnitude;
+                if(obstacleDistance<ObstacleRadius*2){
+                    SuccessiveTime++;
+                }else {
+                    for(int j=ObstacleNum;j>ObstacleNum-SuccessiveTime;j--) ObstacleEachWei[j]=1/SuccessiveTime;
+                    SuccessiveTime=1;
+                }
+                ObstacleNum++;
+                Debug.DrawRay(ray.origin,ray.direction*hit.distance,Color.red,dt,true);
+            }else Debug.DrawRay(ray.origin,ray.direction*RayLength,Color.green,dt,true);
         }
-        //}catch{
-        //    Debug.Log("飛ばしたで");
-        //}  
-    }
-}
+        ObstaclePos_x=new float[ObstacleNum];
+        ObstaclePos_z=new float[ObstacleNum];
+        for(int i=0;i<ObstacleNum;i++){
+            ObstaclePos_x[i]=obstaclePos_x[i];
+            ObstaclePos_z[i]=obstaclePos_z[i];
+        }
+    }//GetObstacles
+}//class
 
